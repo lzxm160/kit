@@ -1,3 +1,4 @@
+export GOROOT=/usr/lib/golang
 export GOPATH=/root/gokit
 export GOBIN=/root/gokit
 
