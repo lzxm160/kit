@@ -6,9 +6,9 @@ import (
 func  test() {
  	names:=[]string{"1","2","3","4","5"}
  	for _,name:=range names{
- 		go func() {
- 			fmt.Println(name)	
- 		}()
+ 		go func(who string) {
+ 			fmt.Println(who)	
+ 		}(name)
  	}
  } 
 
