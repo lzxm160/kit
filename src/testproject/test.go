@@ -74,7 +74,7 @@ func (this *Counter)String()string {
 	return fmt.Sprintf("{count:%d}",this.count)
 }
 
-func test() {
+func test3() {
 	countmap:=make(chan map[string]*Counter,1)
 	sync2:=make(chan struct{},2)
 	go func() {
@@ -99,6 +99,38 @@ func test() {
 		close(countmap)
 		defer func(){sync2<-struct{}{}}()
 	}()
+	
+	<-sync2
+
+	<-sync2
+} 
+func receive(countmap <-chan map[string]*Counter,sync2 chan<- struct{}) {
+	for{
+		if elem,ok:=<-countmap;ok{
+			c:=elem["count"]
+			c.count++
+			fmt.Println("sync1:",elem)
+		}else{
+			fmt.Println("sync1 break")
+			break
+		}
+	}
+	sync2<-struct{}{}
+}
+func sends(countmap chan<- map[string]*Counter,sync2 chan<- struct{}) {
+	content:=map[string]*Counter{"count":&Counter{}}
+	for i:=0;i<5;i++{
+		countmap<-content
+		fmt.Println("sync2:",content)
+	}
+	close(countmap)
+	sync2<-struct{}{}
+}
+func test() {
+	countmap:=make(chan map[string]*Counter,1)
+	sync2:=make(chan struct{},2)
+	go receive(countmap,sync2)
+	go sends(countmap,sync2)
 	
 	<-sync2
 
