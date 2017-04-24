@@ -243,7 +243,8 @@ func test() {
 	select{
 	case i:=<-chan1:
 		fmt.Println(i)
-	case <-time.NewTimer(time.Millisecond*500).C:
+	// case <-time.NewTimer(time.Millisecond*500).C:
+	case <-time.After(time.Millisecond*500):
 		fmt.Println("timeout")
 	}
 	
