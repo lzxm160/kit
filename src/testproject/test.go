@@ -44,7 +44,9 @@ func test() {
 	content<-"b"
 	content<-"c"
 	close(content)
+	
 	<-sync2
+
 	<-sync2
 } 
 func main() {
