@@ -80,7 +80,8 @@ func test() {
 	go func() {
 		for{
 			if elem,ok:=<-countmap;ok{
-				elem["count"].count++
+				c:=elem["count"]
+				c.count++
 				fmt.Println("sync1:",elem)
 			}else{
 				fmt.Println("sync1 break")
