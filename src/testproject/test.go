@@ -43,6 +43,7 @@ func test() {
 	go func() {
 		for{
 			if elem,ok:=<-countmap;ok{
+				elem["count"]++
 				fmt.Println("sync1:",elem)
 			}else{
 				fmt.Println("sync1 break")
