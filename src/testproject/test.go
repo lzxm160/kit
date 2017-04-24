@@ -121,8 +121,9 @@ func test() {
 
 	df.Close()
 	v := reflect.ValueOf(&df)	
-	fmt.Println(v.Interface().(myFile).Woffset())
-	fmt.Println(v.Interface().(myFile).Roffset())
+	// fmt.Println(v.Interface().(myFile).Woffset())
+	// fmt.Println(v.Interface().(myFile).Roffset())
+	v.MethodByName("Woffset").Call()
 }
 func main() {
 	test()
