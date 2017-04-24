@@ -141,11 +141,11 @@ func test4() {
 
 	<-sync2
 } 
-func get_number(int i)int {
+func get_number(i int)int {
 	fmt.Println("get_number:",i)
 	return num[i]
 }
-func get_chan(int i)chan int {
+func get_chan(i int)chan int {
 	fmt.Println("get_chan:",i)
 	return channels[i]
 }
