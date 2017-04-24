@@ -285,11 +285,11 @@ func test() {
 		sum+=i
 		if sum>10{
 			fmt.Println(sum)
+			ticker.Stop()
 			break
 		}
 	}
 	fmt.Println("done")
-	
 }
 func main() {
 	test()
