@@ -270,7 +270,7 @@ func test() {
 	ticker:=time.NewTicker(time.Second)
 	// synchan:=make(chan struct{})
 	go func() {
-		for _,ok=range ticker.C{
+		for _,ok:=range ticker.C{
 			if !ok{
 				break
 			}
