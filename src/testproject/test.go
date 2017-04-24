@@ -312,7 +312,7 @@ func test() {
 		if p:=recover();p!=nil{
 			fmt.Printf("%#v\n",p)
 		}
-	}
+	}()
 	mutex:=sync.mutex
 	mutex.Lock()
 	mutex.Unlock()
