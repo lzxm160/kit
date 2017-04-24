@@ -268,7 +268,7 @@ func test9() {
 func test() {
 	chan1:=make(chan int)
 	ticker:=time.NewTicker(time.Second)
-
+	synchan:=make(chan struct{})
 	go func() {
 		for _=range ticker.C{
 			select{
@@ -278,6 +278,7 @@ func test() {
 			}
 		}
 		fmt.Println("end")
+		synchan<-struct{}{}
 	}()
 	sum:=0
 	for i:=range chan1{
@@ -290,6 +291,7 @@ func test() {
 		}
 	}
 	fmt.Println("done")
+	<-synchan
 }
 func main() {
 	test()
