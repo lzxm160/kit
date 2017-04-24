@@ -265,7 +265,7 @@ func test9() {
 	
 	
 }
-func test() {
+func test10() {
 	chan1:=make(chan int)
 	ticker:=time.NewTicker(time.Second)
 	done:=make(chan struct{})
@@ -306,6 +306,18 @@ func test() {
 	fmt.Println("done")
 	// <-synchan
 	// time.Sleep(time.Second)
+}
+func test() {
+	defer func() {
+		if p:=recover();p!=nil{
+			fmt.Printf("%#v\n",p)
+		}
+	}
+	mutex:=sync.mutex
+	mutex.Lock()
+	mutex.Unlock()
+	fmt.Println("..............")
+	mutex.Unlock()
 }
 func main() {
 	test()
