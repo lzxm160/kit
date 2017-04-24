@@ -52,8 +52,9 @@ func (this *myFile)Close()error {
 func test() {
 	df,err:=NewCocurrencyFile("test.log",10000)
 	if err!=nil{
-		df.Read()
+		fmt.Println(err)	
 	}
+	df.Read()
 }
 func main() {
 	test()
