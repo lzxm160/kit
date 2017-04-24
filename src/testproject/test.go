@@ -238,15 +238,31 @@ func test() {
 	go func() {
 		time.Sleep(time.Second)
 		chan1<-1
+		close(chan1)
 	}()
-	
-	select{
-	case i:=<-chan1:
-		fmt.Println(i)
-	// case <-time.NewTimer(time.Millisecond*500).C:
-	case <-time.After(time.Millisecond*500):
-		fmt.Println("timeout")
+	timeout:=time.Millisecond*500
+	var timer *time.Timer
+	for{
+		if timer==nil{
+			timer=time.NewTimer(timeout)
+		}else{
+			timer.Reset(timeout)
+		}
+		select{
+			case i,ok:=<-chan1:
+				if !ok{
+					fmt.Println("end")
+					return
+				}else{
+					fmt.Println(i)
+				}
+				
+			// case <-time.NewTimer(time.Millisecond*500).C:
+			case <-timer.C:
+				fmt.Println("timeout")
+		}
 	}
+	
 	
 }
 func main() {
