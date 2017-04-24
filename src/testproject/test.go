@@ -91,7 +91,7 @@ func test() {
 		defer func(){sync2<-struct{}{}}()
 	}()
 	go func() {
-		content:=make(map[string]Counter){"count":&Counter{}}
+		content:=make(map[string]Counter){"count":Counter{}}
 		for i:=0;i<5;i++{
 			countmap<-content
 			fmt.Println("sync2:",content)
