@@ -108,7 +108,12 @@ func test() {
 	<-syncchan
 	fmt.Println("b:",d)
 
+	fmt.Println(df.roffset)
+	fmt.Println(df.dataLen)
 	fmt.Println(df.RSN())
+
+	fmt.Println(df.woffset)
+	fmt.Println(df.dataLen)
 	fmt.Println(df.WSN())	
 }
 func main() {
