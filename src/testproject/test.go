@@ -75,7 +75,7 @@ func (this *Counter)String()string {
 }
 
 func test() {
-	countmap:=make(chan map[string]Counter,1)
+	countmap:=make(chan map[string]*Counter,1)
 	sync2:=make(chan struct{},2)
 	go func() {
 		for{
@@ -91,7 +91,7 @@ func test() {
 		defer func(){sync2<-struct{}{}}()
 	}()
 	go func() {
-		content:=map[string]Counter{"count":Counter{}}
+		content:=map[string]*Counter{"count":&Counter{}}
 		for i:=0;i<5;i++{
 			countmap<-content
 			fmt.Println("sync2:",content)
