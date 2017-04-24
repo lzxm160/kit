@@ -224,6 +224,9 @@ func test7() {
 	<-synchan
 }
 func test() {
+	loc, _:= time.LoadLocation("Asia/Chongqing")
+    fmt.Println(time.Now().In(loc))
+    
 	timer:=time.NewTimer(time.Second*2)
 	fmt.Printf("now: %v\n",time.Now())
 	expirationTime:=<-timer.C
