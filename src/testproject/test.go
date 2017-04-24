@@ -195,28 +195,31 @@ func test6() {
 }
 func test() {
 	chan1:=make(chan int)
+	synchan:=make(chan struct{})
 	go func() {
 		for i:=0;i<5;i++{
 			chan1<-i
-			fmt.Println(time.Now())
+			fmt.Println("1:",time.Now())
 		}
 		close(chan1)
-	}
+	}()
 	go func() {
 		loop:
 		for{
 			select{
 			case i,ok:=<-chan1:
-				fmt.Println(time.Now())
+				fmt.Println("2:",time.Now())
 				if !ok{
 					fmt.Println("close")
+					synchan<-struct{}{}
 					break loop
 				}else{
 					fmt.Println(i)
 				}
 			}
 		}
-	}
+	}()
+	<-synchan
 }
 func main() {
 	test()
