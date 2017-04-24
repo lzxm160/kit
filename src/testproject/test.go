@@ -65,13 +65,19 @@ func (this *myFile)Write(d []byte)(wsn int64,err error) {
 
 }
 func (this *myFile)RSN()int64 {
-	return 0
+	this.rmutex.Lock()
+	defer this.rmutex.Unlock()
+
+	return this.roffset/int64(this.dataLen)
 }
 func (this *myFile)WSN()int64 {
-	return 0
+	this.wmutex.Lock()
+	defer this.wmutex.Unlock()
+	return this.woffset/int64(this.dataLen)
 }
 func (this *myFile)Close()error {
-	return nil
+
+	return os.Close(this.f)
 }
 func test() {
 	df,err:=NewCocurrencyFile("test.log",3)
@@ -101,6 +107,9 @@ func test() {
 	_,d,_:=df.Read()
 	<-syncchan
 	fmt.Println("b:",d)
+
+	fmt.Println(df.RSN())
+	fmt.Println(df.WSN())	
 }
 func main() {
 	test()
