@@ -314,7 +314,7 @@ func test() {
 			fmt.Printf("%#v\n",p)
 		}
 	}()
-	mutex:=sync.Mutex
+	var mutex sync.Mutex
 	mutex.Lock()
 	mutex.Unlock()
 	fmt.Println("..............")
