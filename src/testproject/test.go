@@ -77,7 +77,7 @@ func (this *myFile)WSN()int64 {
 }
 func (this *myFile)Close()error {
 
-	return os.Close(this.f)
+	return this.f.Close()
 }
 func test() {
 	df,err:=NewCocurrencyFile("test.log",3)
