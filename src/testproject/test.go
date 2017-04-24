@@ -47,8 +47,23 @@ func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	_,err=this.f.ReadAt(d,offset)
 	return
 }
-func (this *myFile)Write()(wsn int64,err error) {
-	return 0,nil
+func (this *myFile)Write(d []byte)(wsn int64,err error) {
+	fmt.Println("write")
+	this.wmutex.Lock()
+	offset:=this.woffset
+	this.woffset+=int64(this.dataLen)
+	this.wmutex.Unlock()
+	wsn=offset/int64(this.dataLen)
+
+	this.fmutex.Lock()
+	defer this.fmutex.Unlock()
+	if len(d)>this.dataLen
+	{
+		d=d[0:this.dataLen]
+	}
+	_,err=this.f.Write(d)
+	return
+
 }
 func (this *myFile)RSN()int64 {
 	return 0
@@ -66,9 +81,14 @@ func test() {
 	}
 	//////
 	// df.(type).f.write([]byte{1,2,3,4,5,6,7,8,9,0})
-	v := reflect.ValueOf(&df)
-	v.Interface().(myFile).f.Write([]byte{1,2,3,4,5,6,7,8,9,0})
-
+	// v := reflect.ValueOf(&df)
+	// v.Interface().(myFile).f.Write([]byte{1,2,3,4,5,6,7,8,9,0})
+	go func() {
+		df.Write([]byte{1,2,3})
+	}()
+	go func() {
+		df.Write([]byte{4,5,6})
+	}()
 	go func() {
 		_,d,_:=df.Read()
 		fmt.Println("a:",d)
