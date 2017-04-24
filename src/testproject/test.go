@@ -5,7 +5,7 @@ import (
 	"sync"
 	"os"
 	"errors"
-	// "reflect"
+	"reflect"
 )
 type cocurrencyFile interface{
 	Read()(rsn int64,d []byte,err error)
