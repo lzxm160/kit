@@ -29,7 +29,7 @@ func test() {
 				break
 			}
 		}
-		sync2<-struct{}{}
+		defer func(){sync2<-struct{}{}}
 	}()
 	go func() {
 		<-sync1
@@ -42,7 +42,7 @@ func test() {
 				break
 			}
 		}
-		sync2<-struct{}{}
+		defer func(){sync2<-struct{}{}}
 	}()
 	content<-"a"
 	content<-"b"
