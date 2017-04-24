@@ -31,6 +31,7 @@ func test() {
 	}()
 	go func() {
 		<-sync1
+		fmt.Println("sync2")
 		for{
 			if elem,ok:=<-content;ok{
 				fmt.Println("sync2:",elem)
