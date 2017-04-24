@@ -193,7 +193,7 @@ func test6() {
 	}()
 	<-synchan
 }
-func test() {
+func test7() {
 	chan1:=make(chan int,3)
 	synchan:=make(chan struct{})
 	go func() {
@@ -222,6 +222,13 @@ func test() {
 		}
 	}()
 	<-synchan
+}
+func test() {
+	timer:=time.NewTimer(time.Second*2)
+	fmt.Printf("now: %v\n",time.Now())
+	expirationTime:=<-timer.C
+	fmt.Printf("exp: %v\n",expirationTime)
+	fmt.Printf("stop: %v\n",timer.Stop())
 }
 func main() {
 	test()
