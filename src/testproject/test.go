@@ -297,6 +297,7 @@ func test() {
 	}
 	fmt.Println("done")
 	// <-synchan
+	time.Sleep(time.Second)
 }
 func main() {
 	test()
