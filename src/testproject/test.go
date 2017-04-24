@@ -64,10 +64,10 @@ func test() {
 		fmt.Println(err)	
 	}
 	go func() {
-		_,d,_=df.Read()
+		_,d,_:=df.Read()
 		fmt.Println("a:",d)
 	}()
-	_,d,_=df.Read()
+	_,d,_:=df.Read()
 	fmt.Println("b:",d)
 }
 func main() {
