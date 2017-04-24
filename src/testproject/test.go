@@ -321,6 +321,7 @@ func test11() {
 	mutex.Unlock()
 }
 func test() {
+	var rwm sync.RWMutex
 	for i:=0;i<3;i++{
 		go func(i int) {
 			rwm.Rlock()
