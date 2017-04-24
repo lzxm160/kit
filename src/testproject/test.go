@@ -9,7 +9,7 @@ import (
 )
 type cocurrencyFile interface{
 	Read()(rsn int64,d []byte,err error)
-	Write()(wsn int64,err error)
+	Write(d []byte)(wsn int64,err error)
 	RSN()int64
 	WSN()int64
 	Close()error
