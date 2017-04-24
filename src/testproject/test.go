@@ -22,7 +22,7 @@ type myFile struct{
 	wmutex sync.Mutex
 	dataLen uint32
 }
-func NewCocurrencyFile(path string,filesize uint32)(*cocurrencyFile,error) {
+func NewCocurrencyFile(path string,filesize uint32)(cocurrencyFile,error) {
 	f,err:=os.Create(path)
 	if err!=nil{
 		return nil,err
