@@ -105,15 +105,20 @@ func test3() {
 	<-sync2
 } 
 func receive(countmap <-chan map[string]*Counter,sync2 chan<- struct{}) {
-	for{
-		if elem,ok:=<-countmap;ok{
-			c:=elem["count"]
-			c.count++
-			fmt.Println("sync1:",elem)
-		}else{
-			fmt.Println("sync1 break")
-			break
-		}
+	// for{
+	// 	if elem,ok:=<-countmap;ok{
+	// 		c:=elem["count"]
+	// 		c.count++
+	// 		fmt.Println("sync1:",elem)
+	// 	}else{
+	// 		fmt.Println("sync1 break")
+	// 		break
+	// 	}
+	// }
+	for elem:=range countmap{
+		c:=elem["count"]
+		c.count++
+		fmt.Println("sync1:",elem)
 	}
 	sync2<-struct{}{}
 }
