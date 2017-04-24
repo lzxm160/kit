@@ -271,6 +271,7 @@ func test() {
 	done:=make(chan struct{})
 	// synchan:=make(chan struct{})
 	go func() {
+		loop:
 		for {
 			select{
 			case <-ticker.C:
@@ -281,7 +282,7 @@ func test() {
 				case chan1<-3:
 				}
 			case <-done:
-				break
+				break loop
 			}
 		}
 		fmt.Println("end")
