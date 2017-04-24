@@ -2,6 +2,7 @@ package main
 import (
 	"fmt"
 	"time"
+	"sync"
 )
 func test1() {
 	content:=make(chan string,3)
@@ -313,7 +314,7 @@ func test() {
 			fmt.Printf("%#v\n",p)
 		}
 	}()
-	mutex:=sync.mutex
+	mutex:=sync.Mutex
 	mutex.Lock()
 	mutex.Unlock()
 	fmt.Println("..............")
