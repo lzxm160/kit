@@ -53,7 +53,7 @@ func test() {
 	}()
 	go func() {
 		content:=make(map[string]int)
-		// content[""]
+		content["count"]=0
 		for i:=0;i<5;i++{
 			countmap<-content
 			fmt.Println("sync2:",content)
