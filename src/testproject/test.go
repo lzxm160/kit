@@ -76,8 +76,13 @@ func (this *myFile)WSN()int64 {
 	return this.woffset/int64(this.dataLen)
 }
 func (this *myFile)Close()error {
-
 	return this.f.Close()
+}
+func (this *myFile)Roffset()int64 {
+	return this.roffset
+}
+func (this *myFile)Woffset()int64 {
+	return this.woffset
 }
 func test() {
 	df,err:=NewCocurrencyFile("test.log",3)
@@ -108,13 +113,12 @@ func test() {
 	<-syncchan
 	fmt.Println("b:",d)
 
-	fmt.Println(df.roffset)
-	fmt.Println(df.dataLen)
+	fmt.Println(df.Roffset())
 	fmt.Println(df.RSN())
 
-	fmt.Println(df.woffset)
-	fmt.Println(df.dataLen)
+	fmt.Println(df.Woffset())
 	fmt.Println(df.WSN())	
+	df.Close()
 }
 func main() {
 	test()
