@@ -123,7 +123,8 @@ func test() {
 	v := reflect.ValueOf(&df)	
 	// fmt.Println(v.Interface().(myFile).Woffset())
 	// fmt.Println(v.Interface().(myFile).Roffset())
-	v.MethodByName("Woffset").Call()
+	v0 := make([]reflect.Value, 0)
+	v.MethodByName("Woffset").Call(v0)
 }
 func main() {
 	test()
