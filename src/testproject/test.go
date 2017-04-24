@@ -64,7 +64,7 @@ func test() {
 		fmt.Println(err)	
 	}
 	//////
-	df.f.write([]byte{1,2,3,4,5,6,7,8,9,0})
+	df.(myFile).f.write([]byte{1,2,3,4,5,6,7,8,9,0})
 	go func() {
 		_,d,_:=df.Read()
 		fmt.Println("a:",d)
