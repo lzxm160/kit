@@ -287,7 +287,7 @@ func test() {
 		if sum>10{
 			fmt.Println(sum)
 			ticker.Stop()
-			if elem,ok:=<-ticker.C;!ok{
+			if _,ok:=<-ticker.C;!ok{
 				fmt.Println("last ticker")
 			}
 			break
