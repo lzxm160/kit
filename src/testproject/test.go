@@ -16,13 +16,13 @@ type cocurrencyFile interface{
 type myFile struct{
 	f *os.File
 	fmutex sync.RWMutex
-	wsn int64
-	rsn int64
+	woffset int64
+	roffset int64
 	rmutex sync.Mutex
 	wmutex sync.Mutex
 	dataLen uint32
 }
-func NewCocurrencyFile(path string,filesize uint32)(cocurrencyFile,error) {
+func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 	f,err:=os.Create(path)
 	if err!=nil{
 		return nil,err
@@ -30,11 +30,20 @@ func NewCocurrencyFile(path string,filesize uint32)(cocurrencyFile,error) {
 	if filesize==0{
 		return nil,errors.New("invalid size of file")
 	}
-	df:=&myFile{f:f,dataLen:filesize}
+	df:=&myFile{f:f,dataLen:blocksize}
 	return df,nil
 }
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	fmt.Println("read")
+	this.rmutex.Lock()
+	offset:=df.roffset
+	df.roffset+=int64(df.dataLen)
+	this.rmutex.Unlock()
+	rsn=offset/int64(df.dataLen)
+	df.fmutex.Lock()
+	defer df.fmutex.Unlock()
+	d=make([]byte,df.dataLen)
+	_,err:=df.f.ReadAt(d,offset)
 	return
 }
 func (this *myFile)Write()(wsn int64,err error) {
@@ -50,11 +59,16 @@ func (this *myFile)Close()error {
 	return nil
 }
 func test() {
-	df,err:=NewCocurrencyFile("test.log",10000)
+	df,err:=NewCocurrencyFile("test.log",3)
 	if err!=nil{
 		fmt.Println(err)	
 	}
-	df.Read()
+	go func() {
+		_,d,_=df.Read()
+		fmt.Println("a:",d)
+	}
+	_,d,_=df.Read()
+	fmt.Println("b:",d)
 }
 func main() {
 	test()
