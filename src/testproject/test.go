@@ -43,7 +43,7 @@ func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	this.fmutex.Lock()
 	defer this.fmutex.Unlock()
 	d=make([]byte,this.dataLen)
-	_,err:=this.f.ReadAt(d,offset)
+	_,err=this.f.ReadAt(d,offset)
 	return
 }
 func (this *myFile)Write()(wsn int64,err error) {
