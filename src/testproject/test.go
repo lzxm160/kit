@@ -131,7 +131,7 @@ func sends(countmap chan<- map[string]*Counter,sync2 chan<- struct{}) {
 	close(countmap)
 	sync2<-struct{}{}
 }
-func test() {
+func test4() {
 	countmap:=make(chan map[string]*Counter,1)
 	sync2:=make(chan struct{},2)
 	go receive(countmap,sync2)
@@ -140,6 +140,30 @@ func test() {
 	<-sync2
 
 	<-sync2
+} 
+func get_number(int i)int {
+	fmt.Println("get_number:",i)
+	return num[i]
+}
+func get_chan(int i)chan int {
+	fmt.Println("get_chan:",i)
+	return channels[i]
+}
+chan1:=chan int
+chan2:=chan int
+channels:=[]chan int{chan1,chan2}
+num:=[]int{1,2,3,4,5}
+func test() {
+	
+
+	select{
+	case get_chan(0)<-get_number(0):
+		fmt.Println("case 1")
+	case get_chan(1)<-get_number(1):
+		fmt.Println("case 2")
+	default:
+		fmt.Println("default")
+	}
 } 
 func main() {
 	test()
