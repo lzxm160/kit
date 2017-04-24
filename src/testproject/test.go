@@ -24,6 +24,7 @@ func test() {
 			if elem,ok:=<-content;ok{
 				fmt.Println("sync1:",elem)
 			}else{
+				fmt.Println("sync1 break")
 				break
 			}
 		}
@@ -36,6 +37,7 @@ func test() {
 			if elem,ok:=<-content;ok{
 				fmt.Println("sync2:",elem)
 			}else{
+				fmt.Println("sync2 break")
 				break
 			}
 		}
