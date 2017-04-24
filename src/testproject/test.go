@@ -308,7 +308,7 @@ func test10() {
 	// <-synchan
 	// time.Sleep(time.Second)
 }
-func test() {
+func test11() {
 	defer func() {
 		if p:=recover();p!=nil{
 			fmt.Printf("%#v\n",p)
@@ -319,6 +319,20 @@ func test() {
 	mutex.Unlock()
 	fmt.Println("..............")
 	mutex.Unlock()
+}
+func test() {
+	for i:=0;i<3;i++{
+		go func(i int) {
+			rwm.Rlock()
+			fmt.Println("lock:",i)
+			time.Sleep(time.Second*2)
+			rwm.RUnlock()
+			fmt.Println("Unlock:",i)
+		}(i)
+	}
+	time.Sleep(time.Millisecond*300)
+	rwm.Lock()
+	fmt.Println("done")
 }
 func main() {
 	test()
