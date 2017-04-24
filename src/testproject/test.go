@@ -228,9 +228,9 @@ func test() {
     fmt.Println(time.Now().In(loc))
     
 	timer:=time.NewTimer(time.Second*2)
-	fmt.Printf("now: %v\n",time.Now())
+	fmt.Printf("now: %v\n",time.Now().In(loc))
 	expirationTime:=<-timer.C
-	fmt.Printf("exp: %v\n",expirationTime)
+	fmt.Printf("exp: %v\n",expirationTime.In(loc))
 	fmt.Printf("stop: %v\n",timer.Stop())
 }
 func main() {
