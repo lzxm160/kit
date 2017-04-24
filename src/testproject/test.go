@@ -37,10 +37,10 @@ func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	fmt.Println("read")
 	this.rmutex.Lock()
 	offset:=this.roffset
-	df.roffset+=int64(this.dataLen)
+	this.roffset+=int64(this.dataLen)
 	this.rmutex.Unlock()
 	rsn=offset/int64(this.dataLen)
-	df.fmutex.Lock()
+	this.fmutex.Lock()
 	defer this.fmutex.Unlock()
 	d=make([]byte,this.dataLen)
 	_,err:=this.f.ReadAt(d,offset)
