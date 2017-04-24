@@ -3,7 +3,7 @@ import (
 	"fmt"
 	"time"
 )
-func test() {
+func test1() {
 	content:=make(chan string,3)
 	sync1:=make(chan struct{},1)
 	sync2:=make(chan struct{},2)
@@ -30,6 +30,34 @@ func test() {
 			}
 		}
 		close(content)
+		defer func(){sync2<-struct{}{}}()
+	}()
+	
+	<-sync2
+
+	<-sync2
+} 
+func test() {
+	countmap:=make(chan map[string]int,1)
+	sync2:=make(chan struct{},2)
+	go func() {
+		for{
+			if elem,ok:=<-countmap;ok{
+				fmt.Println("sync1:",elem)
+			}else{
+				fmt.Println("sync1 break")
+				break
+			}
+		}
+		defer func(){sync2<-struct{}{}}()
+	}()
+	go func() {
+
+		for i:=0;i<5;i++{
+			content<-countmap
+			fmt.Println("sync2:",countmap)
+		}
+		close(countmap)
 		defer func(){sync2<-struct{}{}}()
 	}()
 	
