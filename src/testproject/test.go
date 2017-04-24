@@ -268,16 +268,20 @@ func test9() {
 func test() {
 	chan1:=make(chan int)
 	ticker:=time.NewTicker(time.Second)
+	done:=make(chan struct{})
 	// synchan:=make(chan struct{})
 	go func() {
-		for _=range ticker.C{
-			fmt.Println("ticker.C")
+		for {
 			select{
-			case chan1<-1:
-			case chan1<-2:
-			case chan1<-3:	
-			default:
-				fmt.Println("default")
+			case <-ticker.C:
+				fmt.Println("ticker.C")
+				select{
+				case chan1<-1:
+				case chan1<-2:
+				case chan1<-3:
+				}
+			case <-done:
+				break
 			}
 		}
 		fmt.Println("end")
@@ -290,7 +294,8 @@ func test() {
 		if sum>10{
 			fmt.Println(sum)
 			ticker.Stop()
-			close(ticker.C)
+			done<-struct{}{}
+			// close(ticker.C)
 			// if _,ok:=<-ticker.C;!ok{
 			// 	fmt.Println("last ticker")
 			// }
@@ -299,7 +304,7 @@ func test() {
 	}
 	fmt.Println("done")
 	// <-synchan
-	time.Sleep(time.Second)
+	// time.Sleep(time.Second)
 }
 func main() {
 	test()
