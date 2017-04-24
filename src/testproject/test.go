@@ -113,12 +113,16 @@ func test() {
 	<-syncchan
 	fmt.Println("b:",d)
 
-	fmt.Println(df.Roffset())
+	// fmt.Println(df.Roffset())
 	fmt.Println(df.RSN())
 
-	fmt.Println(df.Woffset())
+	// fmt.Println(df.Woffset())
 	fmt.Println(df.WSN())	
+
 	df.Close()
+	v := reflect.ValueOf(&df)	
+	fmt.Println(v.Interface().(myFile).Woffset())
+	fmt.Println(v.Interface().(myFile).Roffset())
 }
 func main() {
 	test()
