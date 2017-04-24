@@ -241,10 +241,10 @@ func test() {
 	}()
 	
 	select{
-	case i<-chan1:
+	case i:=<-chan1:
 		fmt.Println(i)
 	case <-time.NewTimer(time.Millisecond*500).C:
-			fmt.Println("timeout")
+		fmt.Println("timeout")
 	}
 	
 }
