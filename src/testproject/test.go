@@ -223,15 +223,30 @@ func test7() {
 	}()
 	<-synchan
 }
-func test() {
+func test8() {
 	loc, _:= time.LoadLocation("Asia/Chongqing")
     fmt.Println(time.Now().In(loc))
-    
+
 	timer:=time.NewTimer(time.Second*2)
 	fmt.Printf("now: %v\n",time.Now().In(loc))
 	expirationTime:=<-timer.C
 	fmt.Printf("exp: %v\n",expirationTime.In(loc))
 	fmt.Printf("stop: %v\n",timer.Stop())
+}
+func test() {
+	chan1:=make(chan int)
+	go func() {
+		time.Sleep(time.Second)
+		chan1<-1
+	}()
+	
+	select{
+	case i<-chan1:
+		fmt.Println(i)
+	case <-time.NewTimer(time.Millisecond*500).C:
+			fmt.Println("timeout")
+	}
+	
 }
 func main() {
 	test()
