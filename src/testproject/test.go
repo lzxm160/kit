@@ -27,7 +27,7 @@ func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 	if err!=nil{
 		return nil,err
 	}
-	if filesize==0{
+	if blocksize==0{
 		return nil,errors.New("invalid size of file")
 	}
 	df:=&myFile{f:f,dataLen:blocksize}
@@ -36,14 +36,14 @@ func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	fmt.Println("read")
 	this.rmutex.Lock()
-	offset:=df.roffset
-	df.roffset+=int64(df.dataLen)
+	offset:=this.roffset
+	df.roffset+=int64(this.dataLen)
 	this.rmutex.Unlock()
-	rsn=offset/int64(df.dataLen)
+	rsn=offset/int64(this.dataLen)
 	df.fmutex.Lock()
-	defer df.fmutex.Unlock()
-	d=make([]byte,df.dataLen)
-	_,err:=df.f.ReadAt(d,offset)
+	defer this.fmutex.Unlock()
+	d=make([]byte,this.dataLen)
+	_,err:=this.f.ReadAt(d,offset)
 	return
 }
 func (this *myFile)Write()(wsn int64,err error) {
