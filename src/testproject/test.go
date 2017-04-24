@@ -82,17 +82,24 @@ func test() {
 	// df.(type).f.write([]byte{1,2,3,4,5,6,7,8,9,0})
 	// v := reflect.ValueOf(&df)
 	// v.Interface().(myFile).f.Write([]byte{1,2,3,4,5,6,7,8,9,0})
+	syncchan:=make(chan struct{},2)
 	go func() {
 		df.Write([]byte{1,2,3})
+		syncchan<-struct{}{}
 	}()
 	go func() {
 		df.Write([]byte{4,5,6})
+		syncchan<-struct{}{}
 	}()
+	<-syncchan
+	<-syncchan
 	go func() {
 		_,d,_:=df.Read()
 		fmt.Println("a:",d)
+		syncchan<-struct{}{}
 	}()
 	_,d,_:=df.Read()
+	<-syncchan
 	fmt.Println("b:",d)
 }
 func main() {
