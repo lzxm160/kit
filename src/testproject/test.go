@@ -194,7 +194,7 @@ func test6() {
 	<-synchan
 }
 func test() {
-	chan1:=make(chan int)
+	chan1:=make(chan int,3)
 	synchan:=make(chan struct{})
 	go func() {
 		for i:=0;i<5;i++{
