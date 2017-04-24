@@ -165,7 +165,7 @@ func test5() {
 		fmt.Println("default")
 	}
 } 
-func test() {
+func test6() {
 	chan1:=make(chan int,10)
 	for i:=0;i<10;i++{
 		chan1<-i
@@ -192,6 +192,31 @@ func test() {
 		synchan<-struct{}{}
 	}()
 	<-synchan
+}
+func test() {
+	chan1:=make(chan int)
+	go func() {
+		for i:=0;i<5;i++{
+			chan1<-i
+			fmt.Println(time.Now())
+		}
+		close(chan1)
+	}
+	go func() {
+		loop:
+		for{
+			select{
+			case i,ok:=<-chan1:
+				fmt.Println(time.Now())
+				if !ok{
+					fmt.Println("close")
+					break loop
+				}else{
+					fmt.Println(i)
+				}
+			}
+		}
+	}
 }
 func main() {
 	test()
