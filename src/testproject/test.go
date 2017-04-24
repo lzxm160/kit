@@ -172,6 +172,9 @@ func test() {
 	}
 	close(chan1)
 	synchan:=make(chan struct{})
+	fmt.Println("chan1 cap:",cap(chan1))
+	fmt.Println("synchan cap:",cap(synchan))
+
 	go func() {
 	loop:
 		for{
