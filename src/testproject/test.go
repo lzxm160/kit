@@ -32,7 +32,7 @@ func NewCocurrencyFile(path string,filesize uint32)(*cocurrencyFile,error) {
 	return df,nil
 }
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
-	
+	fmt.Println("read")
 }
 func (this *myFile)Write()(wsn int64,err error) {
 	
