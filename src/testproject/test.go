@@ -199,7 +199,7 @@ func test() {
 	go func() {
 		for i:=0;i<5;i++{
 			chan1<-i
-			fmt.Println("1:",time.Now())
+			fmt.Println("send:",time.Now())
 			time.Sleep(time.Second)
 		}
 		close(chan1)
@@ -210,7 +210,7 @@ func test() {
 			time.Sleep(time.Second*2)
 			select{
 			case i,ok:=<-chan1:
-				fmt.Println("2:",time.Now())
+				fmt.Println("receive:",time.Now())
 				if !ok{
 					fmt.Println("close")
 					synchan<-struct{}{}
