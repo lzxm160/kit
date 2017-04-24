@@ -12,7 +12,7 @@ func test() {
 		for{
 			if elem,ok:=<-content;ok{
 				fmt.Println("sync1:",elem)
-				time.Sleep(time.Second)
+				// time.Sleep(time.Second)
 			}else{
 				fmt.Println("sync1 break")
 				break
