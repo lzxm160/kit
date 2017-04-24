@@ -52,10 +52,11 @@ func test() {
 		defer func(){sync2<-struct{}{}}()
 	}()
 	go func() {
-
+		content:=make(map[string]int)
+		// content[""]
 		for i:=0;i<5;i++{
-			content<-countmap
-			fmt.Println("sync2:",countmap)
+			countmap<-content
+			fmt.Println("sync2:",content)
 		}
 		close(countmap)
 		defer func(){sync2<-struct{}{}}()
