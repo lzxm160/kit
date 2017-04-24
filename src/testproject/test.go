@@ -200,12 +200,14 @@ func test() {
 		for i:=0;i<5;i++{
 			chan1<-i
 			fmt.Println("1:",time.Now())
+			time.Sleep(time.Second)
 		}
 		close(chan1)
 	}()
 	go func() {
 		loop:
 		for{
+			time.Sleep(time.Second*2)
 			select{
 			case i,ok:=<-chan1:
 				fmt.Println("2:",time.Now())
