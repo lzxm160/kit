@@ -47,7 +47,7 @@ func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	return
 }
 func (this *myFile)Write()(wsn int64,err error) {
-	return
+	return 0,nil
 }
 func (this *myFile)RSN()int64 {
 	return 0
@@ -66,7 +66,7 @@ func test() {
 	go func() {
 		_,d,_=df.Read()
 		fmt.Println("a:",d)
-	}
+	}()
 	_,d,_=df.Read()
 	fmt.Println("b:",d)
 }
