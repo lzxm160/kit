@@ -153,7 +153,7 @@ var chan1 chan int
 var chan2 chan int
 var channels=[]chan int{chan1,chan2}
 var num=[]int{1,2,3,4,5}
-func test() {
+func test5() {
 	
 
 	select{
@@ -165,6 +165,31 @@ func test() {
 		fmt.Println("default")
 	}
 } 
+func test() {
+	chan1:=make(chan int,10)
+	for i:=0;i<10;i++{
+		chan1<-i
+	}
+	close(chan1)
+	synchan:=make(chan struct{},1)
+	go func() {
+	loop:
+		for{
+			select{
+			case i,ok:=<-chan1:
+				if !ok{
+					fmt.Println("end")
+					break loop
+				}
+				fmt.Println(i)
+			default:
+				fmt.Println("default")
+			}
+		}
+		synchan<-struct{}{}
+	}()
+	<-synchan
+}
 func main() {
 	test()
 	time.Sleep(time.Second)
