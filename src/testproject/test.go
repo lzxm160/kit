@@ -270,10 +270,8 @@ func test() {
 	ticker:=time.NewTicker(time.Second)
 	// synchan:=make(chan struct{})
 	go func() {
-		for _,ok:=range ticker.C{
-			if !ok{
-				break
-			}
+		for _=range ticker.C{
+			fmt.Println("ticker.C")
 			select{
 			case chan1<-1:
 			case chan1<-2:
