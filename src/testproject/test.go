@@ -275,6 +275,8 @@ func test() {
 			case chan1<-1:
 			case chan1<-2:
 			case chan1<-3:	
+			default:
+				fmt.Println("default")
 			}
 		}
 		fmt.Println("end")
@@ -287,9 +289,9 @@ func test() {
 		if sum>10{
 			fmt.Println(sum)
 			ticker.Stop()
-			if _,ok:=<-ticker.C;!ok{
-				fmt.Println("last ticker")
-			}
+			// if _,ok:=<-ticker.C;!ok{
+			// 	fmt.Println("last ticker")
+			// }
 			break
 		}
 	}
