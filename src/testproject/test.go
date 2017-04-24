@@ -233,7 +233,7 @@ func test8() {
 	fmt.Printf("exp: %v\n",expirationTime.In(loc))
 	fmt.Printf("stop: %v\n",timer.Stop())
 }
-func test() {
+func test9() {
 	chan1:=make(chan int)
 	go func() {
 		time.Sleep(time.Second)
@@ -263,6 +263,32 @@ func test() {
 		}
 	}
 	
+	
+}
+func test() {
+	chan1:=make(chan int)
+	ticker:=time.NewTicker(time.Second)
+
+	go func() {
+		for _=range ticker.C{
+			select{
+			case chan1<-1:
+			case chan1<-2:
+			case chan1<-3:	
+			}
+		}
+		fmt.Println("end")
+	}()
+	sum:=0
+	for i:=range chan1{
+		fmt.Println("i:",i)
+		sum+=i
+		if sum>10{
+			fmt.Println(sum)
+			break
+		}
+	}
+	fmt.Println("done")
 	
 }
 func main() {
