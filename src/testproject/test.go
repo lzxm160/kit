@@ -67,7 +67,7 @@ func test() {
 	//////
 	// df.(type).f.write([]byte{1,2,3,4,5,6,7,8,9,0})
 	v := reflect.ValueOf(&df)
-	v.Interface().(myFile).f.write([]byte{1,2,3,4,5,6,7,8,9,0})
+	v.Interface().(myFile).f.Write([]byte{1,2,3,4,5,6,7,8,9,0})
 
 	go func() {
 		_,d,_:=df.Read()
