@@ -57,8 +57,7 @@ func (this *myFile)Write(d []byte)(wsn int64,err error) {
 
 	this.fmutex.Lock()
 	defer this.fmutex.Unlock()
-	if len(d)>int(this.dataLen)
-	{
+	if len(d)>int(this.dataLen){
 		d=d[0:this.dataLen]
 	}
 	_,err=this.f.Write(d)
