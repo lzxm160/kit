@@ -3,6 +3,7 @@ import (
 	"fmt"
 	"time"
 	"sync"
+	"os"
 )
 type cocurrencyFile interface{
 	Read()(rsn int64,d []byte,err error)
