@@ -171,7 +171,7 @@ func test() {
 		chan1<-i
 	}
 	close(chan1)
-	synchan:=make(chan struct{},1)
+	synchan:=make(chan struct{})
 	go func() {
 	loop:
 		for{
