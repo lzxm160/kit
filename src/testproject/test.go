@@ -149,10 +149,10 @@ func get_chan(int i)chan int {
 	fmt.Println("get_chan:",i)
 	return channels[i]
 }
-chan1:=chan int
-chan2:=chan int
-channels:=[]chan int{chan1,chan2}
-num:=[]int{1,2,3,4,5}
+var chan1 chan int
+var chan2 chan int
+var channels=[]chan int{chan1,chan2}
+var num=[]int{1,2,3,4,5}
 func test() {
 	
 
