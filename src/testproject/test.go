@@ -195,7 +195,7 @@ func NewMyatomicinterface(len uint32)*myAtomicinterface {
 func (this *myAtomicinterface)Set(index uint32,elem int)error {
 	arr:=make([]int,this.len)
 	copy(arr,this.val.Load().([]int))
-	arr[index]=elem
+	arr[index]=elem+arr[index]
 	this.val.Store(arr)
 	return nil
 }
