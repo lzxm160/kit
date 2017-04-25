@@ -13,7 +13,7 @@ type cocurrencyFile interface{
 	Write(d []byte)(wsn int64,err error)
 	RSN()int64
 	WSN()int64
-	Close()error
+	Close()error 
 	Roffset()int64 
 	Woffset()int64 
 }
@@ -25,6 +25,7 @@ type myFile struct{
 	rmutex sync.Mutex
 	wmutex sync.Mutex
 	dataLen uint32
+	rcond *sync.Cond
 }
 func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 	f,err:=os.Create(path)
@@ -34,7 +35,8 @@ func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 	if blocksize==0{
 		return nil,errors.New("invalid size of file")
 	}
-	df:=&myFile{f:f,dataLen:blocksize}
+
+	df:=&myFile{f:f,dataLen:blocksize,rcond:NewCond(fmutex)}
 	return df,nil
 }
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
