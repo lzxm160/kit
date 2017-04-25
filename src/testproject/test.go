@@ -166,7 +166,7 @@ func test1() {
 	fmt.Println(df.Roffset())
 	fmt.Println(df.Woffset())
 }
-func test() {
+func test2() {
 	var countval atomic.Value
 	syncchan:=make(chan struct{})
 	countval.Store([]int{1,3,5})
@@ -176,6 +176,45 @@ func test() {
 	}(countval)
 	fmt.Printf("%+v \n",countval.Load())
 	<-syncchan
+}
+type atomicinterface interface{
+	Set(index uint32,elem int)error
+	Get(index uint32)(int,error)
+	Len()uint32
+}
+type myAtomicinterface struct{
+	val atomic.Value
+	len uint32
+}
+func NewMyatomicinterface(len uint32)*myAtomicinterface {
+	arr:=myAtomicinterface{}
+	arr.len=len
+	arr.val.Store(make([]int,len))
+	return &arr
+}
+func (this *myAtomicinterface)Set(index uint32,elem int)error {
+	arr:=make([]int,this.len)
+	copy(arr,this.val.Load().([]int))
+	arr[index]=elem
+	this.val.Store(arr)
+	return nil
+}
+func (this *myAtomicinterface)Get(index uint32)(int,error) {
+	return this.val.Load().([]int)[index],nil
+}
+func (this *myAtomicinterface)Len()uint32 {
+	return this.len
+}
+func test() {
+	arr:=NewMyatomicinterface(5)
+	for i=0;i<5;i++{
+		arr.Set(i,i*2)
+	}
+	for i=0;i<5;i++{
+		val,_:=arr.Get(i)
+		fmt.Println(val)
+	}
+	fmt.Println(arr.Len())
 }
 func main() {
 	test()
