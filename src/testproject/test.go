@@ -53,17 +53,27 @@ func (this *myFile)Write(d []byte)(wsn int64,err error) {
 	fmt.Println("write")
 	this.wmutex.Lock()
 	offset:=this.woffset
-	this.woffset+=int64(this.dataLen)
+	woffsetadd:=0
+	if len(d)>this.dataLen{
+		woffsetadd=this.dataLen
+	}else{
+		woffsetadd=len(d)
+	}
+	this.woffset+=int64(woffsetadd)
 	this.wmutex.Unlock()
 	wsn=offset/int64(this.dataLen)
 
+	var bytes []byte
+	if len(d)>int(this.dataLen){
+		bytes=d[0:this.dataLen]
+	}else{
+		bytes=d
+	}
 	this.fmutex.Lock()
 	defer this.fmutex.Unlock()
-	if len(d)>int(this.dataLen){
-		d=d[0:this.dataLen]
-	}
-	fmt.Println("len d:",len(d))
-	_,err=this.f.Write(d)
+	
+	fmt.Println("len d:",len(bytes))
+	_,err=this.f.Write(bytes)
 	return
 
 }
