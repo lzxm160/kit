@@ -62,6 +62,7 @@ func (this *myFile)Write(d []byte)(wsn int64,err error) {
 	if len(d)>int(this.dataLen){
 		d=d[0:this.dataLen]
 	}
+	fmt.Println("len d:",len(d))
 	_,err=this.f.Write(d)
 	return
 
