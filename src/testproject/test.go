@@ -7,6 +7,7 @@ import (
 	"errors"
 	// "reflect"
 	"io"
+	"sync/atomic"
 )
 type cocurrencyFile interface{
 	Read()(rsn int64,d []byte,err error)
@@ -114,7 +115,7 @@ func (this *myFile)Roffset()int64 {
 func (this *myFile)Woffset()int64 {
 	return this.woffset
 }
-func test() {
+func test1() {
 	df,err:=NewCocurrencyFile("test.log",3)
 	if err!=nil{
 		fmt.Println(err)	
@@ -157,6 +158,17 @@ func test() {
 	// v.MethodByName("Woffset").Call(v0)
 	fmt.Println(df.Roffset())
 	fmt.Println(df.Woffset())
+}
+func test() {
+	var countval atomic.Value
+	syncchan:=make(chan struct{})
+	countval.Store([]int{1,3,5})
+	go func(countval atomic.Value) {
+		countval.Store([]int{2,4,6,8})
+		syncchan<-struct{}{}
+	}()
+	fmt.Printf("%+v \n",countval.Load())
+	<-syncchan
 }
 func main() {
 	test()
