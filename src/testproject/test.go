@@ -166,7 +166,7 @@ func test() {
 	go func(countval atomic.Value) {
 		countval.Store([]int{2,4,6,8})
 		syncchan<-struct{}{}
-	}()
+	}(countval)
 	fmt.Printf("%+v \n",countval.Load())
 	<-syncchan
 }
