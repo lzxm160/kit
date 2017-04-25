@@ -13,6 +13,8 @@ type cocurrencyFile interface{
 	RSN()int64
 	WSN()int64
 	Close()error
+	Roffset()int64 
+	Woffset()int64 
 }
 type myFile struct{
 	f *os.File
@@ -99,7 +101,7 @@ func test() {
 		syncchan<-struct{}{}
 	}()
 	go func() {
-		df.Write([]byte{4,5,6})
+		df.Write([]byte{4,5})
 		syncchan<-struct{}{}
 	}()
 	<-syncchan
@@ -123,8 +125,10 @@ func test() {
 	v := reflect.ValueOf(&df)	
 	// fmt.Println(v.Interface().(myFile).Woffset())
 	// fmt.Println(v.Interface().(myFile).Roffset())
-	v0 := make([]reflect.Value, 0)
-	v.MethodByName("Woffset").Call(v0)
+	// v0 := make([]reflect.Value, 0)
+	// v.MethodByName("Woffset").Call(v0)
+	fmt.Println(df.Roffset())
+	fmt.Println(df.Woffset())
 }
 func main() {
 	test()
