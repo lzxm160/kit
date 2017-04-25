@@ -43,10 +43,17 @@ func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 }
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	fmt.Println("read")
-	this.rmutex.Lock()
-	offset:=this.roffset
-	this.roffset+=int64(this.dataLen)
-	this.rmutex.Unlock()
+	// this.rmutex.Lock()
+	// offset:=this.roffset
+	// this.roffset+=int64(this.dataLen)
+	// this.rmutex.Unlock()
+	var offset int64
+	for{
+		offset=atomic.LoadInt64(&this.roffset)
+		if atomic.CompareAndSwapInt64(&this.roffset,offset,offset+int64(this.dataLen)){
+			break
+		}
+	}
 	rsn=offset/int64(this.dataLen)
 	this.fmutex.Lock()
 	defer this.fmutex.Unlock()
