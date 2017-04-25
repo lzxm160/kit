@@ -207,7 +207,9 @@ func (this *myAtomicinterface)Len()uint32 {
 }
 func test() {
 	arr:=NewMyatomicinterface(5)
-	syncchan:=make(chan struct{})
+	// syncchan:=make(chan struct{})
+	var wg sync.WaitGroup
+	wg.Add(1)
 	for i:=0;i<5;i++{
 		arr.Set(uint32(i),i*2)
 	}
@@ -215,9 +217,11 @@ func test() {
 		for i:=0;i<5;i++{
 			arr.Set(uint32(i),i*2)
 		}
-		syncchan<-struct{}{}
+		// syncchan<-struct{}{}
+		wg.Done()
 	}()
-	<-syncchan
+	// <-syncchan
+	wg.Wait()
 	for i:=0;i<5;i++{
 		val,_:=arr.Get(uint32(i))
 		fmt.Println(val)
