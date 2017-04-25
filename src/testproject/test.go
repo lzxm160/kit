@@ -47,6 +47,12 @@ func (this *myFile)Read()(rsn int64,d []byte,err error) {
 	defer this.fmutex.Unlock()
 	d=make([]byte,this.dataLen)
 	_,err=this.f.ReadAt(d,offset)
+	if err!=nil{
+		fmt.Println(err)
+		if err==io.EOF{
+			fmt.Println("io.EOF")
+		}
+	}
 	return
 }
 func (this *myFile)Write(d []byte)(wsn int64,err error) {
