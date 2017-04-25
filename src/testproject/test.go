@@ -36,7 +36,7 @@ func NewCocurrencyFile(path string,blocksize uint32)(cocurrencyFile,error) {
 		return nil,errors.New("invalid size of file")
 	}
 
-	df:=&myFile{f:f,dataLen:blocksize,rcond:NewCond(fmutex)}
+	df:=&myFile{f:f,dataLen:blocksize,rcond:sync.NewCond(fmutex)}
 	return df,nil
 }
 func (this *myFile)Read()(rsn int64,d []byte,err error) {
