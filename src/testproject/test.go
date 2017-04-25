@@ -122,7 +122,7 @@ func test() {
 	fmt.Println(df.WSN())	
 
 	df.Close()
-	v := reflect.ValueOf(&df)	
+	// v := reflect.ValueOf(&df)	
 	// fmt.Println(v.Interface().(myFile).Woffset())
 	// fmt.Println(v.Interface().(myFile).Roffset())
 	// v0 := make([]reflect.Value, 0)
