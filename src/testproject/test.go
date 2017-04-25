@@ -207,10 +207,10 @@ func (this *myAtomicinterface)Len()uint32 {
 }
 func test() {
 	arr:=NewMyatomicinterface(5)
-	for i=0;i<5;i++{
+	for i:=0;i<5;i++{
 		arr.Set(i,i*2)
 	}
-	for i=0;i<5;i++{
+	for i:=0;i<5;i++{
 		val,_:=arr.Get(i)
 		fmt.Println(val)
 	}
