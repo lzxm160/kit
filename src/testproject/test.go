@@ -8,6 +8,9 @@ import (
 	// "reflect"
 	"io"
 	"sync/atomic"
+	"runtime"
+	"runtime/debug"
+	
 )
 type cocurrencyFile interface{
 	Read()(rsn int64,d []byte,err error)
@@ -205,7 +208,7 @@ func (this *myAtomicinterface)Get(index uint32)(int,error) {
 func (this *myAtomicinterface)Len()uint32 {
 	return this.len
 }
-func test() {
+func test3() {
 	arr:=NewMyatomicinterface(5)
 	// syncchan:=make(chan struct{})
 	var wg sync.WaitGroup
@@ -227,6 +230,26 @@ func test() {
 		fmt.Println(val)
 	}
 	fmt.Println(arr.Len())
+}
+func test() {
+	defer debug.SetGCPercent(debug.SetGCPercent(-1))
+	var count int64
+	newfunc:=func()interface{} {
+		return atomic.AddInt64(&count,1)
+	}
+	pool:=sync.Pool{New:newfunc}
+	v1:=pool.Get()
+	fmt.Println(v1)
+	pool.Put(10)
+	pool.Put(11)
+	pool.Put(12)
+
+	fmt.Println(pool.Get())
+	debug.SetGCPercent(100)
+	runtime.GC()
+	fmt.Println(pool.Get())
+	pool.New=nil
+	fmt.Println(pool.Get())
 }
 func main() {
 	test()
