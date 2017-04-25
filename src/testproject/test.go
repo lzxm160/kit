@@ -54,7 +54,7 @@ func (this *myFile)Write(d []byte)(wsn int64,err error) {
 	this.wmutex.Lock()
 	offset:=this.woffset
 	woffsetadd:=0
-	if len(d)>this.dataLen{
+	if len(d)>int(this.dataLen){
 		woffsetadd=this.dataLen
 	}else{
 		woffsetadd=len(d)
