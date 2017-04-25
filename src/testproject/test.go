@@ -207,9 +207,17 @@ func (this *myAtomicinterface)Len()uint32 {
 }
 func test() {
 	arr:=NewMyatomicinterface(5)
+	syncchan:=make(chan struct{})
 	for i:=0;i<5;i++{
 		arr.Set(uint32(i),i*2)
 	}
+	go func() {
+		for i:=0;i<5;i++{
+			arr.Set(uint32(i),i*2)
+		}
+		syncchan<-struct{}{}
+	}()
+	<-syncchan
 	for i:=0;i<5;i++{
 		val,_:=arr.Get(uint32(i))
 		fmt.Println(val)
