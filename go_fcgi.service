@@ -1,0 +1,14 @@
+[Unit]
+Description=update data
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecStart=/root/go_fcgi/go_fcgi
+WorkingDirectory=/root/go_fcgi
+PrivateTmp=true
+Restart=on-failure
+RestartSec=30
+User=root
+[Install]
+WantedBy=multi-user.target
