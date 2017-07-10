@@ -18,12 +18,11 @@ func main() {
 	fmt.Println("start lock main")
 	mutex.Lock()
 	fmt.Println("main is locked")
-	for i:=1;i<=3;i++{
-		go func(i int) {
-			fmt.Println("go start lock %d",i)
-			mutex.Lock()
-			fmt.Println("go lock is locked %d",i)
-		}(i)
+	defer func() {
+		fmt.Println("try to recover panic")
+		if p:=recover();p!=nil{
+			fmt.Println("---%#v",p)
+		}
 	}
 	time.Sleep(time.Second)
 	fmt.Println("start unlock main")
@@ -31,6 +30,9 @@ func main() {
 	fmt.Println("unlocked main")
 	
 	time.Sleep(time.Second*3)
+	fmt.Println("start unlock main again")
+	mutex.Unlock()
+	fmt.Println("unlocked main again")
 	// var (
 	// 	httpAddr = flag.String("http.addr", ":8080", "HTTP listen address")
 	// )
