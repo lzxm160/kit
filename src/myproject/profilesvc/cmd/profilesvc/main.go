@@ -14,25 +14,22 @@ import (
 )
 
 func main() {
-	var mutex sync.Mutex
-	fmt.Println("start lock main")
+	var mutex sync.RWMutex
+	for i:=0;i<3;i++{
+		go func(i int) {
+			fmt.Println("try read lock %d",i)
+			mutex.RLock()
+			fmt.Println("%d locked",i)
+			time.Sleep(time.Second)
+			fmt.Println("try read unlock %d",i)
+			mutex.RUnLock()
+			fmt.Println("%d unlocked",i)
+		}()
+	}
+	time.Sleep(time.Millisecond*100)
+	fmt.Println("try to write lock main")
 	mutex.Lock()
-	fmt.Println("main is locked")
-	defer func() {
-		fmt.Println("try to recover panic")
-		if p:=recover();p!=nil{
-			fmt.Println("---%#v",p)
-		}
-	}()
-	time.Sleep(time.Second)
-	fmt.Println("start unlock main")
-	mutex.Unlock()
-	fmt.Println("unlocked main")
-	
-	time.Sleep(time.Second*3)
-	fmt.Println("start unlock main again")
-	mutex.Unlock()
-	fmt.Println("unlocked main again")
+	fmt.Println("write locked")
 	// var (
 	// 	httpAddr = flag.String("http.addr", ":8080", "HTTP listen address")
 	// )
