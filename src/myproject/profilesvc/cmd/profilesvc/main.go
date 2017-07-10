@@ -23,7 +23,7 @@ func main() {
 		if p:=recover();p!=nil{
 			fmt.Println("---%#v",p)
 		}
-	}
+	}()
 	time.Sleep(time.Second)
 	fmt.Println("start unlock main")
 	mutex.Unlock()
