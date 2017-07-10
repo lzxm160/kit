@@ -22,7 +22,7 @@ func main() {
 			fmt.Println("%d locked",i)
 			time.Sleep(time.Second)
 			fmt.Println("try read unlock %d",i)
-			mutex.RUnLock()
+			mutex.RUnlock()
 			fmt.Println("%d unlocked",i)
 		}()
 	}
