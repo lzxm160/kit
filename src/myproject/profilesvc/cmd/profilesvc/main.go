@@ -19,7 +19,7 @@ func main() {
 	mutex.Lock()
 	fmt.Println("main is locked")
 	for i:=1;i<=3;i++{
-		go func(int i) {
+		go func(i int) {
 			fmt.Println("go start lock %d",i)
 			mutex.Lock()
 			fmt.Println("go lock is locked %d",i)
