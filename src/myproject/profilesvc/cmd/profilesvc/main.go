@@ -24,7 +24,7 @@ func main() {
 			fmt.Println("try read unlock %d",i)
 			mutex.RUnlock()
 			fmt.Println("%d unlocked",i)
-		}()
+		}(i)
 	}
 	time.Sleep(time.Millisecond*100)
 	fmt.Println("try to write lock main")
