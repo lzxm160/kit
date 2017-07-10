@@ -13,26 +13,7 @@ import (
 	_"github.com/go-kit/kit/log"
 	"testing"
 )
-var bytePool=sync.Pool{
-	New:newPool,
-}
-func newPool() interface{}{
-	b:=make([]byte,1024)
-	return &b
-}
-func BenchmarkAlloc(b *testing.B) {
-	for i:=0;i<b.N;i++{
-		o:=make([]byte,1024)
-		_=o
-	}
-}
-func BenchmarkPool(b *testing.B) {
-	for i:=0;i<b.N;i++{
-		o:=bytePool.Get().(*[]byte)
-		_=o
-		bytePool.Put(o)
-	}
-}
+
 // func main() {
 // 	var mutex sync.RWMutex
 // 	for i:=0;i<3;i++{
