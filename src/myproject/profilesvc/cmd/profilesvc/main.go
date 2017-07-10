@@ -1,16 +1,16 @@
 ﻿package main
 
 import (
-	"flag"
+	_"flag"
 	"fmt"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
+	_"net/http"
+	_"os"
+	_"os/signal"
+	_"syscall"
 	"sync"
 	"time"
-	"github.com/go-kit/kit/examples/profilesvc"
-	"github.com/go-kit/kit/log"
+	_"github.com/go-kit/kit/examples/profilesvc"
+	_"github.com/go-kit/kit/log"
 )
 
 func main() {
