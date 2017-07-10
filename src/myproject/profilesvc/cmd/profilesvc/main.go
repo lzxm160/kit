@@ -14,7 +14,7 @@ import (
 	"testing"
 )
 var bytePool=sync.Pool{
-	New:newPool
+	New:newPool,
 }
 func newPool() interface{}{
 	b:=make([]byte,1024)
