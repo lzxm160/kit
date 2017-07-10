@@ -1,5 +1,5 @@
 export GOROOT=/usr/lib/golang
-export GOPATH=`pwd`;`pwd`/src
+export GOPATH=`pwd`;
 export GOBIN=`pwd`
 
 #rm -fr gokit
