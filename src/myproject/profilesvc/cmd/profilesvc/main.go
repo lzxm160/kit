@@ -86,4 +86,4 @@ func BenchmarkPool(b *testing.B) {
 	// }()
 
 	// logger.Log("exit", <-errs)
-}
+// }
