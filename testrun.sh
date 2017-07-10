@@ -9,4 +9,4 @@ export GOBIN=`pwd`
 #go test -bench myproject/profilesvc/cmd/profilesvc/main.go
 #go build -o gokit myproject/profilesvc/cmd/profilesvc
 cd src/myproject/profilesvc/cmd/profilesvc/
-go test -bench main_test.go
+go test -bench .
