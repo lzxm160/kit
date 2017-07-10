@@ -2,13 +2,13 @@
 
 import (
 	_"flag"
-	"fmt"
+	_"fmt"
 	_"net/http"
 	_"os"
 	_"os/signal"
 	_"syscall"
 	"sync"
-	"time"
+	_"time"
 	_"github.com/go-kit/kit/examples/profilesvc"
 	_"github.com/go-kit/kit/log"
 	"testing"
