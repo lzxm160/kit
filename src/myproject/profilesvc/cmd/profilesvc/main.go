@@ -17,13 +17,13 @@ func main() {
 	var mutex sync.RWMutex
 	for i:=0;i<3;i++{
 		go func(i int) {
-			fmt.Println("try read lock %d",i)
+			fmt.Println("try read lock ",i)
 			mutex.RLock()
-			fmt.Println("%d locked",i)
+			fmt.Println("locked ",i)
 			time.Sleep(time.Second)
-			fmt.Println("try read unlock %d",i)
+			fmt.Println("try read unlock ",i)
 			mutex.RUnlock()
-			fmt.Println("%d unlocked",i)
+			fmt.Println("unlocked ",i)
 		}(i)
 	}
 	time.Sleep(time.Millisecond*100)
