@@ -5,4 +5,5 @@ export GOBIN=`pwd`
 #rm -fr gokit
 #go build -o gokit myproject/profilesvc/cmd/profilesvc
 #./gokit
-go run src/testproject/test.go
+#go run src/testproject/test.go
+go test -bench src/testproject/test.go
