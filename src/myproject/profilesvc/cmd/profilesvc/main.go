@@ -33,23 +33,23 @@ func BenchmarkPool(b *testing.B) {
 		bytePool.Put(o)
 	}
 }
-func main() {
-	var mutex sync.RWMutex
-	for i:=0;i<3;i++{
-		go func(i int) {
-			fmt.Println("try read lock ",i)
-			mutex.RLock()
-			fmt.Println("locked ",i)
-			time.Sleep(time.Second)
-			fmt.Println("try read unlock ",i)
-			mutex.RUnlock()
-			fmt.Println("unlocked ",i)
-		}(i)
-	}
-	time.Sleep(time.Millisecond*100)
-	fmt.Println("try to write lock main")
-	mutex.Lock()
-	fmt.Println("write locked")
+// func main() {
+// 	var mutex sync.RWMutex
+// 	for i:=0;i<3;i++{
+// 		go func(i int) {
+// 			fmt.Println("try read lock ",i)
+// 			mutex.RLock()
+// 			fmt.Println("locked ",i)
+// 			time.Sleep(time.Second)
+// 			fmt.Println("try read unlock ",i)
+// 			mutex.RUnlock()
+// 			fmt.Println("unlocked ",i)
+// 		}(i)
+// 	}
+// 	time.Sleep(time.Millisecond*100)
+// 	fmt.Println("try to write lock main")
+// 	mutex.Lock()
+// 	fmt.Println("write locked")
 	// var (
 	// 	httpAddr = flag.String("http.addr", ":8080", "HTTP listen address")
 	// )
@@ -86,4 +86,4 @@ func main() {
 	// }()
 
 	// logger.Log("exit", <-errs)
-// }
+}
