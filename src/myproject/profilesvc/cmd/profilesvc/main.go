@@ -7,11 +7,11 @@ import (
 	_"os"
 	_"os/signal"
 	_"syscall"
-	"sync"
+	_"sync"
 	_"time"
 	_"github.com/go-kit/kit/examples/profilesvc"
 	_"github.com/go-kit/kit/log"
-	"testing"
+	_"testing"
 )
 
 // func main() {
