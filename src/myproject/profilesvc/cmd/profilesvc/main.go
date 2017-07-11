@@ -35,19 +35,28 @@ func addValueAtomic(delta int32) {
 
 	for{
 		v:=atomic.LoadInt32(&value)
-		fmt.Println("1",v)
+		fmt.Println("1:",v)
 		if atomic.CompareAndSwapInt32(&value,v,v+delta){
 			break
 		}
 	}
 	fmt.Println("2:",value)
 }
-func test() {
+func test2() {
 	// var u64 uint64
 	// u64=3
 	// atomic.AddUint64(&u64,^uint64(3-1))
 	// fmt.Println(u64)
 	addValueAtomic(2)
+}
+func test() {
+	var atomicVal atomic.Value
+	atomicVal.Store([]int{1,3,5,7})
+	another(atomicVal)
+	fmt.Println("%+v",atomicVal)
+}
+func another(c atomic.Value) {
+	c.Store([]int{2,4,6,8})
 }
 func main() {
 	test()
