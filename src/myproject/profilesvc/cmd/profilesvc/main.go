@@ -14,7 +14,7 @@ import (
 	_"testing"
 )
 func test() {
-	var mutex sync.Mutex
+	var mutex=new(sync.Mutex)
 	var cond=sync.NewCond(mutex)
 	done:=false
 	go func() {
