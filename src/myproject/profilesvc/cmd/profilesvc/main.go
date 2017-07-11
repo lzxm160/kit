@@ -31,7 +31,7 @@ func test1() {
 	fmt.Println("done")
 }
 func addValueAtomic(delta int32) {
-	value:=3
+	var value int32=3
 
 	for{
 		v:=atomic.LoadInt32(&value)
