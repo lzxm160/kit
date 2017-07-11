@@ -84,6 +84,10 @@ func (this *ConcurrentArray)Get(index uint32) (val int,err error){
 	val=this.val.Load().([]int)[index]
 	return
 }
+func (this *ConcurrentArray)Len() (len uint32){
+	len=this.length
+	return
+}
 func test() {
 	te:=NewConcurrencyArray(5)
 	for i:=0;i<5;i++{
