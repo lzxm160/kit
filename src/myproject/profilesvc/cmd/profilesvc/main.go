@@ -97,7 +97,7 @@ func test() {
 	}
 	for i:=0;i<5;i++{
 		v,e:=te.Get(uint32(i))
-		if(!e){
+		if(e!=nil){
 			fmt.Println(v)
 		}
 	}
