@@ -96,7 +96,7 @@ func test() {
 		}(i)	
 	}
 	for i:=0;i<5;i++{
-		v,e:=te.Get(i)
+		v,e:=te.Get(uint32(i))
 		if(!e){
 			fmt.Println(v)
 		}
