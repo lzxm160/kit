@@ -33,9 +33,9 @@ func test1() {
 func test() {
 	var u64 uint64
 	u64=3
-	atomic.AddInt64(&u64,^uint64(-3-1))
+	atomic.AddUint64(&u64,^uint64(3-1))
 	fmt.Println(u64)
-	
+
 }
 func main() {
 	test()
