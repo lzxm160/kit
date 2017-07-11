@@ -49,7 +49,7 @@ func test2() {
 	// fmt.Println(u64)
 	addValueAtomic(2)
 }
-func test() {
+func test3() {
 	var atomicVal atomic.Value
 	atomicVal.Store([]int{1,3,5,7})
 	another(atomicVal)
@@ -57,6 +57,46 @@ func test() {
 }
 func another(c atomic.Value) {
 	c.Store([]int{2,4,6,8})
+}
+type ConcurrentArrayInterface interface{
+	Set(index uint32,elem int)(err error)
+	Get(index uint32)(elem int,err error)
+	Len()uint32
+}
+type ConcurrentArray struct{
+	length uint32
+	val atomic.Value
+}
+func NewConcurrencyArray(len uint32)ConcurrentArrayInterface {
+	arr:=ConcurrentArray{}
+	arr.length=len
+	arr.val.Store(make([]int,arr.length))
+	return &arr
+}
+func (this *ConcurrentArray)Set(index uint32,elem int)(err error) {
+	newArray:=make([]int,this.length)
+	copy(newArray,this.val.Load().([]int))
+	newArray[index]=elem
+	this.val.Store(newArray)
+	return
+}
+func (this *ConcurrentArray)Get(index uint32) (val int,err error){
+	val=this.val.Load().([]int)[index]
+	return
+}
+func test() {
+	te:=NewConcurrencyArray(5)
+	for i:=0;i<5;i++{
+		go func(i int) {
+			te.Set(i,i*i)
+		}()	
+	}
+	for i:=0;i<5;i++{
+		v,e:=te.Get(i)
+		if(!e){
+			fmt.Println(v)
+		}
+	}
 }
 func main() {
 	test()
