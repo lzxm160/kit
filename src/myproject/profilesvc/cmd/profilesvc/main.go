@@ -30,12 +30,24 @@ func test1() {
 	}
 	fmt.Println("done")
 }
-func test() {
-	var u64 uint64
-	u64=3
-	atomic.AddUint64(&u64,^uint64(3-1))
-	fmt.Println(u64)
+func addValueAtomic(delta int32) {
+	value:=3
 
+	for{
+		v:=atomic.LoadInt32(&value)
+		fmt.Println("1",v)
+		if atomic.CompareAndSwapInt32(&value,v,v+delta){
+			break
+		}
+	}
+	fmt.Println("2:",value)
+}
+func test() {
+	// var u64 uint64
+	// u64=3
+	// atomic.AddUint64(&u64,^uint64(3-1))
+	// fmt.Println(u64)
+	addValueAtomic(2)
 }
 func main() {
 	test()
