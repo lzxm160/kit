@@ -93,7 +93,7 @@ func test() {
 	for i:=0;i<5;i++{
 		go func(i int) {
 			te.Set(uint32(i),i*i)
-		}()	
+		}(i)	
 	}
 	for i:=0;i<5;i++{
 		v,e:=te.Get(i)
