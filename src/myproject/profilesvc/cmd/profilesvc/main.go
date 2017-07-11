@@ -53,7 +53,7 @@ func test() {
 	var atomicVal atomic.Value
 	atomicVal.Store([]int{1,3,5,7})
 	another(atomicVal)
-	fmt.Println("%+v",atomicVal)
+	fmt.Printf("%+v",atomicVal)
 }
 func another(c atomic.Value) {
 	c.Store([]int{2,4,6,8})
