@@ -102,6 +102,8 @@ func test() {
 	for i:=0;i<5;i++{
 		v,e:=te.Get(uint32(i))
 		if(e!=nil){
+			fmt.Println(e)
+		}else{
 			fmt.Println(v)
 		}
 	}
