@@ -13,18 +13,32 @@ import (
 	_"github.com/go-kit/kit/log"
 	_"testing"
 )
-
+func test() {
+	var mutex sync.Mutex
+	var cond=sync.NewCond(mutex)
+	done:=false
+	go func() {
+		time.Sleep(time.Second*3)
+		done=true
+		cond.Signal()
+	}()
+	if(!done){
+		cond.Wait()
+	}
+	fmt.Println("done")
+}
 func main() {
-	var once sync.Once
-	onceFunc:=func() {
-		fmt.Println("once")
-	}
-	for i:=0;i<10;i++{
-		go func() {
-			once.Do(onceFunc)
-		}()
-	}
-	time.Sleep(time.Second*3)
+	test()
+	// var once sync.Once
+	// onceFunc:=func() {
+	// 	fmt.Println("once")
+	// }
+	// for i:=0;i<10;i++{
+	// 	go func() {
+	// 		once.Do(onceFunc)
+	// 	}()
+	// }
+	// time.Sleep(time.Second*3)
 // 	var mutex sync.RWMutex
 // 	for i:=0;i<3;i++{
 // 		go func(i int) {
