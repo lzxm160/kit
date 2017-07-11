@@ -2,19 +2,29 @@
 
 import (
 	_"flag"
-	_"fmt"
+	"fmt"
 	_"net/http"
 	_"os"
 	_"os/signal"
 	_"syscall"
-	_"sync"
-	_"time"
+	"sync"
+	"time"
 	_"github.com/go-kit/kit/examples/profilesvc"
 	_"github.com/go-kit/kit/log"
 	_"testing"
 )
 
-// func main() {
+func main() {
+	var once sync.Once
+	onceFunc:=func() {
+		fmt.Println("once")
+	}
+	for i:=0;i<10;i++{
+		go func() {
+			once.Do(onceFunc)
+		}()
+	}
+	time.Sleep(time.Second*3)
 // 	var mutex sync.RWMutex
 // 	for i:=0;i<3;i++{
 // 		go func(i int) {
@@ -67,4 +77,4 @@ import (
 	// }()
 
 	// logger.Log("exit", <-errs)
-// }
+}
