@@ -89,12 +89,16 @@ func (this *ConcurrentArray)Len() (len uint32){
 	return
 }
 func test() {
+	var wg sync.WaitGroup
+	wg.Add(5)
 	te:=NewConcurrencyArray(5)
 	for i:=0;i<5;i++{
 		go func(i int) {
 			te.Set(uint32(i),i*i)
+			wg.Done()
 		}(i)	
 	}
+	wg.Wait()
 	for i:=0;i<5;i++{
 		v,e:=te.Get(uint32(i))
 		if(e!=nil){
