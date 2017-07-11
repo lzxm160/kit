@@ -12,8 +12,9 @@ import (
 	_"github.com/go-kit/kit/examples/profilesvc"
 	_"github.com/go-kit/kit/log"
 	_"testing"
+	"sync/atomic"
 )
-func test() {
+func test1() {
 	//var mutex=new(sync.Mutex)
 	var mutex sync.Mutex
 	cond:=sync.NewCond(&mutex)
@@ -28,6 +29,13 @@ func test() {
 		cond.Wait()
 	}
 	fmt.Println("done")
+}
+func test() {
+	var u64 uint64
+	u64=3
+	atomic.AddInt64(&u64,^uint64(-3-1))
+	fmt.Println(u64)
+	
 }
 func main() {
 	test()
