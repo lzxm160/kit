@@ -17,6 +17,7 @@ func test() {
 	var mutex=new(sync.Mutex)
 	var cond=sync.NewCond(mutex)
 	done:=false
+	cond.L.Lock()
 	go func() {
 		time.Sleep(time.Second*3)
 		done=true
