@@ -92,7 +92,7 @@ func test() {
 	te:=NewConcurrencyArray(5)
 	for i:=0;i<5;i++{
 		go func(i int) {
-			te.Set(i,i*i)
+			te.Set(uint32(i),uint32(i)*uint32(i))
 		}()	
 	}
 	for i:=0;i<5;i++{
